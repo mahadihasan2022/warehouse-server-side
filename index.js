@@ -1,6 +1,7 @@
 const express = require ('express');
 const cors = require ('cors');
 const { MongoClient, ServerApiVersion } = require('mongodb');
+const ObjectId = require('mongodb').ObjectId;
 require ('dotenv').config();
 
 const port = process.env.PORT || 5000;
@@ -21,6 +22,7 @@ async function run(){
     try{
         await client.connect();
         const productCollection = client.db("laptopStore").collection('product') 
+        const itemCollection = client.db("laptopRemove").collection('item') 
 
         app.get('/product', async (req, res) =>{
             const query = {};
@@ -28,16 +30,33 @@ async function run(){
             const products = await cursor.toArray();
             res.send(products);
         })
+        app.get('/inventory', async (req, res) =>{
+            const query = {};
+            const cursor = itemCollection.find(query);
+            const items = await cursor.toArray();
+            res.send(items);
+        })
+        app.get('/inventory/:id', async(req, res) =>{
+            const id = req.params.id;
+            const query = {_id: ObjectId(id)};
+            const result = await itemCollection.findOne(query);
+            res.send(result);
+        })
+        app.delete('/inventory/:id', async(req, res) =>{
+            const id = req.params.id;
+            const query = {_id: ObjectId(id)};
+            const result = await itemCollection.deleteOne(query);
+            res.send(result);
+        })
   
     }
-
 
     finally{
 
     }
 }
-
 run().catch(console.dir);
+
 
 app.get('/', (req, res) =>{
     res.send('my-laptop-store-server is running')
@@ -47,3 +66,4 @@ app.get('/', (req, res) =>{
 app.listen(port, () =>{
     console.log("listening  the port", port)
 })
+

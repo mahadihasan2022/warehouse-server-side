@@ -1,7 +1,7 @@
 const express = require ('express');
 const cors = require ('cors');
 const { MongoClient, ServerApiVersion } = require('mongodb');
-const ObjectId = require('mongodb').ObjectId;
+// const ObjectId = require('mongodb').ObjectId;
 require ('dotenv').config();
 
 const port = process.env.PORT || 5000;
@@ -36,19 +36,32 @@ async function run(){
             const items = await cursor.toArray();
             res.send(items);
         })
-        app.get('/inventory/:id', async(req, res) =>{
-            const id = req.params.id;
-            const query = {_id: ObjectId(id)};
-            const result = await itemCollection.findOne(query);
-            res.send(result);
-        })
-        app.delete('/inventory/:id', async(req, res) =>{
-            const id = req.params.id;
-            const query = {_id: ObjectId(id)};
-            const result = await itemCollection.deleteOne(query);
-            res.send(result);
-        })
+        // app.get('/inventory/:id', async(req, res) =>{
+        //     const id = req.params.id;
+        //     const query = {_id: ObjectId(id)};
+        //     const result = await itemCollection.findOne(query);
+        //     res.send(result);
+        // })
+        // app.delete('/inventory/:id', async(req, res) =>{
+        //     const id = req.params.id;
+        //     const query = {_id: ObjectId(id)};
+        //     const result = await itemCollection.deleteOne(query);
+        //     res.send(result);
+        // })
+
+    //    app.post("/inventory", async (req, res) => {
+    //        const product = req.body;
+    //        if(!product.name || !product.price){
+    //            return res.send({success : false, error: "please provide all information"});
+
+    //        }
+    //        const result = await itemCollection.insertOne(product);
+    //    })
+
   
+    }
+    catch (error){
+        console.log(error)
     }
 
     finally{

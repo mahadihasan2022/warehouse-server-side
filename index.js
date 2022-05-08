@@ -36,6 +36,21 @@ async function run(){
             const items = await cursor.toArray();
             res.send(items);
         })
+
+        // app.put("/service/:id", async(req, res)=>{
+        //     const id = req.params.id;
+        //     const data = req.body;
+        //     console.log(data,id);
+        //     const filter = {_id:ObjectId(id)};
+        //     const options = {upset:true};
+        //     const updatedoc = {
+        //         $set:{
+        //             ...data
+        //         },
+        //     };
+        //     const result = await serviceCollection.updateOne(filter,updatedoc,options);
+        //     res.send(result);
+        // })
         // app.get('/inventory/:id', async(req, res) =>{
         //     const id = req.params.id;
         //     const query = {_id: ObjectId(id)};
